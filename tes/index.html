@@ -14,15 +14,9 @@
 
 
 
-<iframe
-  id="ytMusic"
-  class="hidden"
-  src="https://www.youtube.com/embed/uaqnG8IvXcI?enablejsapi=1&loop=1&playlist=uaqnG8IvXcI&playsinline=1"
-  allow="autoplay"
-  frameborder="0">
-</iframe>
-
-
+<audio id="bgMusic" preload="auto">
+  <source src="sound.mp3" type="audio/mpeg">
+</audio>
 
 
   <style>
@@ -342,11 +336,12 @@ document.getElementById("startBtn").addEventListener("click", async () => {
   document.getElementById("startBtn").style.display = "none";
   document.getElementById("wishesContainer").classList.remove("hidden");
 
-  // PLAY YOUTUBE MUSIC (LEGAL AUTOPLAY)
-  const iframe = document.getElementById("ytMusic");
-  if (!iframe.src.includes("autoplay=1")) {
-    iframe.src += "&autoplay=1";
-  }
+   // 🔥 iOS SAFE AUDIO PLAY
+  const audio = document.getElementById("bgMusic");
+  audio.volume = 0.7;
+  audio.play().catch(() => {
+    console.log("iOS blocked autoplay");
+  });
 
   // EMOJI
   emojiInterval = setInterval(createEmoji, 300);
