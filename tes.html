@@ -1,0 +1,376 @@
+
+
+<body id="body" onclick="fullScreen()">
+  <div class="stars"></div>
+  <button class="start-btn" id="startBtn">Coba pencet deh</button>
+  <div id="wishesContainer" class="hidden">
+    <div id="wishes" class="wishes"></div>
+  </div>
+
+  <div id="photoContainer" class="photo-container hidden">
+  <img src="https://cdn.antaranews.com/cache/1200x800/2018/11/jok4.jpg" />
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJqzxQ4STVlCfLrAJD-eVIH5AunKFr4ZezIA&s" />
+</div>
+
+
+
+<iframe
+  id="ytMusic"
+  class="hidden"
+  src="https://www.youtube.com/embed/uaqnG8IvXcI?enablejsapi=1&loop=1&playlist=uaqnG8IvXcI&playsinline=1"
+  allow="autoplay"
+  frameborder="0">
+</iframe>
+
+
+
+
+  <style>
+    :root {
+  --primary-color: #ff00ff;
+  --secondary-color: #00ffff;
+  --text-color: #fff;
+}
+
+.photo-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  z-index: 2;
+}
+
+.photo-container img {
+  width: 280px;
+  max-width: 80vw;
+  border-radius: 20px;
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  animation: photoIn 1.5s ease forwards;
+  box-shadow: 0 0 30px rgba(255,255,255,0.3);
+}
+
+.photo-container img:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+@keyframes photoIn {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: var(--text-color);
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: background-color 2s ease;
+}
+
+body.sad-theme {
+  background-color: #1a1a2e;
+}
+
+.sad-theme .wishes {
+  color: #a5a5a5;
+}
+
+.sad-theme .star {
+  animation: slowTwinkle 4s infinite;
+}
+
+@keyframes slowTwinkle {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle var(--duration) infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.start-btn,
+.choice-btn {
+  padding: 15px 30px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.start-btn {
+  animation: glow 2s infinite;
+}
+
+.choice-btn {
+  margin: 10px;
+  font-size: 18px;
+  opacity: 0;
+}
+
+.start-btn:hover,
+.choice-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(255, 0, 255, 0.8);
+  }
+
+  100% {
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.wishes {
+  text-align: center;
+  font-size: 24px;
+  margin: 20px;
+  opacity: 0;
+  font-family: "Dancing Script", cursive;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.emoji {
+  position: absolute;
+  font-size: 30px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.neon-text {
+  text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color),
+    0 0 30px var(--primary-color);
+}
+
+.message-container {
+  max-width: 90%;
+  width: 800px;
+  text-align: center;
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100vh) translateX(var(--random-x));
+    opacity: 0;
+  }
+}
+
+.mute-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.mute-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+  </style>
+
+<script>
+/* =======================
+   DATA
+======================= */
+
+const wishes = [
+  "Hai Byku 🤍",
+  "Hari ini rasanya sedikit berbeda dari hari biasanya",
+  "15 Januari",
+  "Hari lahir kamu 🤍",
+  "Khairunnisa Urafa Nur Ilham",
+  "Sekarang kamu genap 22 tahun",
+  "Aku cuma mau bilang terima kasih",
+  "Terima kasih sudah lahir ke dunia ini",
+  "Dan terima kasih sudah jadi caca yang raffa kenal ini ya",
+  "Caca yang apa adanya, sederhana, tulus, dan sangat perhatian...",
+  "Senyummu sering datang tanpa sadar",
+  "Tapi selalu bikin hari jadi lebih ringan",
+  "Kadang kamu nggak sadar seberapa besar pengaruhmu",
+  "Tapi kehadiranmu itu berarti",
+  "Aku harap di umur yang baru ini",
+  "Kamu selalu dikelilingi hal-hal yang baik",
+  "Langkahmu dimudahkan",
+  "Hatimu dijaga",
+  "Dan semoga kamu selalu merasa cukup dan bahagia",
+  "Happy milad, Cinta pertama dan terakhirku",
+  "Khairunnisa Urafa Nur Ilham 🤍"
+];
+
+let emojiInterval;
+
+/* =======================
+   EFFECTS
+======================= */
+function createStars() {
+  for (let i = 0; i < 200; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.width = `${Math.random() * 3}px`;
+    star.style.height = star.style.width;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.setProperty("--duration", `${Math.random() * 3 + 1}s`);
+    document.querySelector(".stars").appendChild(star);
+  }
+}
+
+function createEmoji() {
+  const emojis = ["🤍", "✨", "⭐"];
+  const emoji = document.createElement("div");
+  emoji.className = "emoji";
+  emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  emoji.style.left = Math.random() * window.innerWidth + "px";
+  emoji.style.top = "-40px";
+  document.body.appendChild(emoji);
+
+  emoji.animate(
+    [
+      { transform: "translateY(0)", opacity: 1 },
+      { transform: `translateY(${window.innerHeight + 50}px)`, opacity: 0 }
+    ],
+    { duration: 3000, easing: "linear" }
+  ).onfinish = () => emoji.remove();
+}
+
+async function typeWriter(text) {
+  const el = document.getElementById("wishes");
+  el.style.opacity = 1;
+  el.innerHTML = "";
+  el.className = "wishes neon-text";
+
+  for (const char of text) {
+    el.innerHTML += char;
+    await new Promise(r => setTimeout(r, 80));
+  }
+
+  await new Promise(r => setTimeout(r, 1000));
+}
+
+/* =======================
+   START BUTTON
+======================= */
+document.getElementById("startBtn").addEventListener("click", async () => {
+  // UI
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("wishesContainer").classList.remove("hidden");
+
+  // PLAY YOUTUBE MUSIC (LEGAL AUTOPLAY)
+  const iframe = document.getElementById("ytMusic");
+  if (!iframe.src.includes("autoplay=1")) {
+    iframe.src += "&autoplay=1";
+  }
+
+  // EMOJI
+  emojiInterval = setInterval(createEmoji, 300);
+
+  // TEXT FLOW
+  for (const wish of wishes) {
+    await typeWriter(wish);
+  }
+});
+
+/* =======================
+   FULLSCREEN
+======================= */
+function fullScreen() {
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isIOS) return; // iOS skip fullscreen
+
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  }
+}
+
+
+/* INIT */
+createStars();
+</script>
+
